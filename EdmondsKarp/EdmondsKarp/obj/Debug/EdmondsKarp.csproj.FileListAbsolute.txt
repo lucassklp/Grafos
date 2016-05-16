@@ -1,0 +1,9 @@
+C:\Users\Lucas Simas\Desktop\Grafos\EdmondsKarp\EdmondsKarp\bin\Debug\EdmondsKarp.exe.config
+C:\Users\Lucas Simas\Desktop\Grafos\EdmondsKarp\EdmondsKarp\bin\Debug\EdmondsKarp.exe
+C:\Users\Lucas Simas\Desktop\Grafos\EdmondsKarp\EdmondsKarp\bin\Debug\EdmondsKarp.pdb
+C:\Users\Lucas Simas\Desktop\Grafos\EdmondsKarp\EdmondsKarp\obj\Debug\EdmondsKarp.csprojResolveAssemblyReference.cache
+C:\Users\Lucas Simas\Desktop\Grafos\EdmondsKarp\EdmondsKarp\obj\Debug\EdmondsKarp.GetElementTransition.resources
+C:\Users\Lucas Simas\Desktop\Grafos\EdmondsKarp\EdmondsKarp\obj\Debug\EdmondsKarp.Properties.Resources.resources
+C:\Users\Lucas Simas\Desktop\Grafos\EdmondsKarp\EdmondsKarp\obj\Debug\EdmondsKarp.csproj.GenerateResource.Cache
+C:\Users\Lucas Simas\Desktop\Grafos\EdmondsKarp\EdmondsKarp\obj\Debug\EdmondsKarp.exe
+C:\Users\Lucas Simas\Desktop\Grafos\EdmondsKarp\EdmondsKarp\obj\Debug\EdmondsKarp.pdb
