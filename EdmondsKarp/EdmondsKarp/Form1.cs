@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -49,8 +50,8 @@ namespace EdmondsKarp
 
 
 
-        List<Vertex> listNodes = new List<Vertex>(); //Lista com os Nós (Ou Estados)
-        List<Edge> listTransition = new List<Edge>(); //Lista com as transições
+        List<Vertex> listVertex = new List<Vertex>(); //Lista com os Nós (Ou Estados)
+        List<Edge> listEdge = new List<Edge>(); //Lista com as transições
 
         //Nodes temporários (usados no comando de transição)
         Vertex Source = null, Destination = null, Selected = null, From = null, To = null;
@@ -86,9 +87,31 @@ namespace EdmondsKarp
 
                 Screen.Fill(backgroundColor);
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                 //Exibir as linhas de transição
                 List<Edge> transicoesFeitas = new List<Edge>();
-                foreach (var item in this.listTransition)
+                foreach (var item in this.listEdge)
                 {
 
 
@@ -125,6 +148,7 @@ namespace EdmondsKarp
                     transicoesFeitas.Add(item);
                 }
 
+                
 
 
                 if (this.linhaTransicao != null)
@@ -134,7 +158,7 @@ namespace EdmondsKarp
                 }
 
                 //Exibir automatos
-                foreach (var item in this.listNodes)
+                foreach (var item in this.listVertex)
                 {
                     Circle node = new Circle(item.Coordenada, 20); //Centro do circulo é a coordenada dele, e o raio é 20
 
@@ -170,14 +194,85 @@ namespace EdmondsKarp
 
                 if (Command == 'Q')
                 {
-                    Graph p = new Graph(this.listNodes, this.listTransition);
-                    Graph result = new Graph();
+                    Graph p = new Graph(this.listVertex, this.listEdge);
                     EdmondsKarp alg = new EdmondsKarp(p);
-                    alg.FindMaxFlow(this.Source, this.Destination, out result);
+                    alg.FindMaxFlow(this.Source, this.Destination);
+                    int maxFlow = alg.GetMaxFlow(this.Destination);
+
+                    MessageBox.Show("Fluxo máximo: " + maxFlow, "Sucesso");
 
 
                     Command = ' ';
                     
+                }
+
+
+
+
+                if (Command == 'S')
+                {
+                    Command = ' ';
+
+                    Stream myStream;
+                    SaveFileDialog sfd = new SaveFileDialog();
+                    sfd.AddExtension = true;
+                    sfd.DefaultExt = "eka";
+                    sfd.Filter = "Edmonds Karp Algorithm (*.eka) | *.eka";
+                    sfd.FileName = "Untitled";
+                    if (sfd.ShowDialog() == DialogResult.OK)
+                    {
+                        try
+                        {
+                            if ((myStream = sfd.OpenFile()) != null)
+                            {
+                                Graph p = new Graph(this.listVertex, this.listEdge);
+                                var binaryFormatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+                                binaryFormatter.Serialize(myStream, p);
+                                MessageBox.Show("Salvo com sucesso!");
+
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Erro: " + ex.Message);
+                        }
+                    }
+
+
+                }
+                else if (Command == 'A')
+                {
+                    Command = ' ';
+
+                    Stream myStream;
+
+                    OpenFileDialog sfd = new OpenFileDialog();
+                    sfd.AddExtension = true;
+                    sfd.DefaultExt = "eka";
+                    sfd.Filter = "Edmonds Karp Algorithm (*.eka) | *.eka";
+                    if (sfd.ShowDialog() == DialogResult.OK)
+                    {
+                        try
+                        {
+                            if ((myStream = sfd.OpenFile()) != null)
+                            {
+                                var binaryFormatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+                                Graph p = (Graph)binaryFormatter.Deserialize(myStream);
+                                this.listVertex.Clear();
+                                this.listEdge.Clear();
+
+
+                                this.listEdge = p.ListEdges;
+                                this.listVertex = p.ListVertex;
+
+                                MessageBox.Show("Carregado com sucesso!");
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Erro: " + ex.Message);
+                        }
+                    }
                 }
 
 
@@ -213,7 +308,7 @@ namespace EdmondsKarp
                     if (!getElementTransition.isCanceled)
                     {
                         value = getElementTransition.Element;
-                        this.listTransition.Add(new Edge(From, selectedNode, value));
+                        this.listEdge.Add(new Edge(From, selectedNode, value));
                     }
                     getElementTransition.Close();
                 }
@@ -243,10 +338,12 @@ namespace EdmondsKarp
                 Command = 'K';
             else if (e.Key == (Key.O))
                 Command = 'O';
-            else if (e.Key == (Key.J))
+            else if (e.Key == (Key.D))
                 Command = 'J';
             else if (e.Key == (Key.Q))
                 Command = 'Q';
+            else if (e.Key == (Key.A))
+                Command = 'A';
         }
 
         private void MouseButtonDown(object sender, MouseButtonEventArgs args)
@@ -256,7 +353,7 @@ namespace EdmondsKarp
                 if (Command == 'E')
                 {
                     string Nome = GenerateNodeName();
-                    this.listNodes.Add(new Vertex(Nome, new Point(x, y)));
+                    this.listVertex.Add(new Vertex(Nome, new Point(x, y)));
                     this.PreviousCommand = 'E';
                     Command = ' ';
                 }
@@ -268,11 +365,11 @@ namespace EdmondsKarp
 
                     if (toDelete != null)
                     {
-                        this.listTransition.RemoveAll(p => p.From.Nome == toDelete.Nome || p.To.Nome == toDelete.Nome);
-                        listNodes.Remove(toDelete);
+                        this.listEdge.RemoveAll(p => p.From.Nome == toDelete.Nome || p.To.Nome == toDelete.Nome);
+                        listVertex.Remove(toDelete);
                     }
                     if (TransicionToDelete != null)
-                        this.listTransition.Remove(TransicionToDelete);
+                        this.listEdge.Remove(TransicionToDelete);
 
 
                     this.PreviousCommand = 'D';
@@ -337,7 +434,7 @@ namespace EdmondsKarp
         private Vertex GetClickedNode()
         {
 
-            foreach (var item in this.listNodes)
+            foreach (var item in this.listVertex)
             {
                 //Tomemos o centro da circunferência:
                 Point centroCircunferência = item.Coordenada;
@@ -352,7 +449,7 @@ namespace EdmondsKarp
 
         private Edge GetClickedTransition()
         {
-            foreach (var item in this.listTransition)
+            foreach (var item in this.listEdge)
             {
                 Point pontoAtual = new Point(x, y);
                 Line linha = new Line(item.From.Coordenada, item.To.Coordenada);
@@ -377,9 +474,9 @@ namespace EdmondsKarp
         private string GenerateNodeName()
         {
             int count = 0;
-            for (count = 0; count < listNodes.Count; count++)
+            for (count = 0; count < listVertex.Count; count++)
             {
-                if (this.listNodes.Find(p => p.Nome == string.Format("{0}", count)) == null)
+                if (this.listVertex.Find(p => p.Nome == string.Format("{0}", count)) == null)
                     return string.Format("{0}", count);
             }
 

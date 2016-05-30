@@ -7,11 +7,12 @@ using System.Threading.Tasks;
 
 namespace EdmondsKarp
 {
+    [Serializable]
     public class Vertex
     {
         public string Nome;
         public Point Coordenada;
-        public Color Cor;
+        public Color Cor { get; set; }
 
         public Vertex(string Nome, Point Coordenada)
         {

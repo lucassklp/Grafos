@@ -7,3 +7,15 @@ C:\Users\Lucas Simas\Desktop\Grafos\EdmondsKarp\EdmondsKarp\obj\Debug\EdmondsKar
 C:\Users\Lucas Simas\Desktop\Grafos\EdmondsKarp\EdmondsKarp\obj\Debug\EdmondsKarp.csproj.GenerateResource.Cache
 C:\Users\Lucas Simas\Desktop\Grafos\EdmondsKarp\EdmondsKarp\obj\Debug\EdmondsKarp.exe
 C:\Users\Lucas Simas\Desktop\Grafos\EdmondsKarp\EdmondsKarp\obj\Debug\EdmondsKarp.pdb
+D:\Lucas\Projetos\GitHub\Grafos\EdmondsKarp\EdmondsKarp\bin\Debug\EdmondsKarp.exe.config
+D:\Lucas\Projetos\GitHub\Grafos\EdmondsKarp\EdmondsKarp\obj\Debug\EdmondsKarp.exe
+D:\Lucas\Projetos\GitHub\Grafos\EdmondsKarp\EdmondsKarp\obj\Debug\EdmondsKarp.pdb
+D:\Lucas\Projetos\GitHub\Grafos\EdmondsKarp\EdmondsKarp\bin\Debug\EdmondsKarp.exe
+D:\Lucas\Projetos\GitHub\Grafos\EdmondsKarp\EdmondsKarp\bin\Debug\EdmondsKarp.pdb
+D:\Lucas\Projetos\GitHub\Grafos\EdmondsKarp\EdmondsKarp\bin\Debug\SdlDotNet.dll
+D:\Lucas\Projetos\GitHub\Grafos\EdmondsKarp\EdmondsKarp\bin\Debug\Tao.Sdl.dll
+D:\Lucas\Projetos\GitHub\Grafos\EdmondsKarp\EdmondsKarp\bin\Debug\Tao.Sdl.xml
+D:\Lucas\Projetos\GitHub\Grafos\EdmondsKarp\EdmondsKarp\obj\Debug\EdmondsKarp.csprojResolveAssemblyReference.cache
+D:\Lucas\Projetos\GitHub\Grafos\EdmondsKarp\EdmondsKarp\obj\Debug\EdmondsKarp.GetElementTransition.resources
+D:\Lucas\Projetos\GitHub\Grafos\EdmondsKarp\EdmondsKarp\obj\Debug\EdmondsKarp.Properties.Resources.resources
+D:\Lucas\Projetos\GitHub\Grafos\EdmondsKarp\EdmondsKarp\obj\Debug\EdmondsKarp.csproj.GenerateResource.Cache

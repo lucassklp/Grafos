@@ -51,7 +51,6 @@
     <Compile Include="Calculos.cs" />
     <Compile Include="Constantes.cs" />
     <Compile Include="EdmondKarp.cs" />
-    <Compile Include="EdmondKarpAlgorithm.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>

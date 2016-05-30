@@ -13,24 +13,15 @@ namespace EdmondsKarp
             this.Grafo = graph;
         }
 
-        public void FindMaxFlow(Vertex source, Vertex target, out Graph legalFlows)
+
+
+        public void FindMaxFlow(Vertex source, Vertex target)
         {
-
             int flow = 0;
-
-            Graph _legalFlows = new Graph();
-            legalFlows = _legalFlows;
-
-            foreach (Vertex v in this.Grafo.ListVertex)
-                _legalFlows.AddVertex(v);
-            foreach (Edge dg in this.Grafo.ListEdges)
-                _legalFlows.AddEdge(dg);
-
-
             while(true)
             {
                 IDictionary<Vertex, Vertex> path;
-                int capacity = BreadthFirstSearch(Grafo, source, target, legalFlows, out path);
+                int capacity = BreadthFirstSearch(Grafo, source, target, out path);
 
                 if (capacity == 0) 
                     break;
@@ -41,16 +32,18 @@ namespace EdmondsKarp
                 while (!v.Equals(source))
                 {
                     Vertex u = path[v];
-                    _legalFlows.SetEdge(u, v, _legalFlows.GetCapacity(u, v) + capacity);
-                    _legalFlows.SetEdge(v, u, _legalFlows.GetCapacity(v, u) - capacity);
+                    this.Grafo.SetEdge(u, v, capacity);
+                    this.Grafo.SetEdge(v, u, (-1) * capacity);
+
                     v = u;
                 }
             }
 
+
             
         }
 
-        private int BreadthFirstSearch(Graph graph, Vertex source, Vertex target, Graph legalFlows, out IDictionary<Vertex, Vertex> path)
+        private int BreadthFirstSearch(Graph graph, Vertex source, Vertex target, out IDictionary<Vertex, Vertex> path)
         {
             path = new Dictionary<Vertex, Vertex>();
             IDictionary<Vertex, int> pathCapacity = new Dictionary<Vertex, int>();
@@ -65,16 +58,16 @@ namespace EdmondsKarp
             {
                 Vertex dequeuedItem = queue.Dequeue();
 
-                IEnumerable<Vertex> Neighbors = graph.Neighbors(dequeuedItem);
+                List<Vertex> Neighbors = graph.Neighbors(dequeuedItem);
                 foreach (Vertex Neighbor in Neighbors)
                 {
                     int capacity = graph.GetCapacity(dequeuedItem, Neighbor);
-                    int lFlows = legalFlows.GetLoad(dequeuedItem, Neighbor);
+                    int lFlows = graph.GetLoad(dequeuedItem, Neighbor);
 
-                    if (capacity -  lFlows > 0 && path.ContainsKey(Neighbor) == false)
+                    if (capacity -  lFlows > 0 && !path.ContainsKey(Neighbor))
                     {
                         path[Neighbor] = dequeuedItem;
-                        pathCapacity[Neighbor] = Math.Min(pathCapacity[dequeuedItem], graph.GetCapacity(dequeuedItem, Neighbor) - legalFlows.GetLoad(dequeuedItem ,Neighbor));
+                        pathCapacity[Neighbor] = Math.Min(pathCapacity[dequeuedItem], graph.GetCapacity(dequeuedItem, Neighbor) - graph.GetLoad(dequeuedItem ,Neighbor));
                         
                         if (!Neighbor.Equals(target)) 
                             queue.Enqueue(Neighbor);
@@ -85,9 +78,18 @@ namespace EdmondsKarp
             }
 
             return 0;
-
         }
 
+        internal int GetMaxFlow(Vertex destination)
+        {
+            int flow = 0;
+            List<Edge> capacities = this.Grafo.ListEdges.FindAll(x => x.To.Nome == destination.Nome);
+
+            foreach (var item in capacities)
+                flow += item.Load;
+
+            return flow;
+        }
     }
 
 }

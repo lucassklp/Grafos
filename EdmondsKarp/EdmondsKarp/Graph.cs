@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace EdmondsKarp
 {
+    [Serializable]
     public class Graph
     {
         private List<Vertex> _listVertex;
@@ -46,7 +47,7 @@ namespace EdmondsKarp
         }
 
 
-        public IEnumerable<Vertex> Neighbors(Vertex u)
+        public List<Vertex> Neighbors(Vertex u)
         {
             List<Vertex> Neighbors = new List<Vertex>();
             List<Edge> Edges = this._listEdges.FindAll(p => p.From == u);
@@ -64,8 +65,10 @@ namespace EdmondsKarp
 
         public void SetEdge(Vertex u, Vertex v, int n)
         {
-            Edge toSet = this._listEdges.Find(p => p.From == u && p.To == v || p.From == v && p.To == u);
-            toSet.Load = n;
+            Edge toSet = this._listEdges.Find(p => p.From == u && p.To == v);
+            if(toSet != null)
+                toSet.Load += n;
+
         }
 
         public int GetLoad(Vertex u, Vertex v)

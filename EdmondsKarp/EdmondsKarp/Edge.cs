@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace EdmondsKarp
 {
+    [Serializable]
     public class Edge
     {
         public Vertex From;
