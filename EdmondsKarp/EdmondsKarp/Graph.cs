@@ -12,8 +12,11 @@ namespace EdmondsKarp
         private List<Vertex> _listVertex;
         private List<Edge> _listEdges;
 
-        #region Properties
-        public List<Vertex> ListVertex
+        public Vertex Destination { get; private set; }
+        public Vertex Source{ get; private set; }
+
+    #region Properties
+    public List<Vertex> ListVertex
         {
             get {return this._listVertex;}
         }
@@ -24,10 +27,12 @@ namespace EdmondsKarp
         }
         #endregion
 
-        public Graph(List<Vertex> listVertex, List<Edge> listEdge)
+        public Graph(List<Vertex> listVertex, List<Edge> listEdge, Vertex Destination, Vertex Source)
         {
             this._listEdges = listEdge;
             this._listVertex = listVertex;
+            this.Destination = Destination;
+            this.Source = Source;
         }
 
         public Graph() 

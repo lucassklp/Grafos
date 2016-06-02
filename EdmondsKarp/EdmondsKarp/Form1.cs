@@ -70,7 +70,7 @@ namespace EdmondsKarp
         public void IniciarSdl()
         {
             Screen = Video.SetVideoMode(1024, 500, false, false, false);
-            Video.WindowCaption = "Simulador de Grafos - Fluxo Máximo";
+            Video.WindowCaption = "Simulador de Grafos - Fluxo Maximo";
             SdlDotNet.Graphics.Font font = new SdlDotNet.Graphics.Font(@"C:\Windows\Fonts\Arial.ttf", 12);
 
             SdlDotNet.Core.Events.Fps = 60;
@@ -164,7 +164,7 @@ namespace EdmondsKarp
 
                     node.Draw(Screen, Color.Green, true, true);
                     Surface nodeName = font.Render(item.Nome, Color.White);
-                    Screen.Blit(nodeName, new Point(item.Coordenada.X - 7, item.Coordenada.Y - 7));
+                    Screen.Blit(nodeName, new Point(item.Coordenada.X - 4, item.Coordenada.Y - 7));
 
 
 
@@ -194,7 +194,7 @@ namespace EdmondsKarp
 
                 if (Command == 'Q')
                 {
-                    Graph p = new Graph(this.listVertex, this.listEdge);
+                    Graph p = new Graph(this.listVertex, this.listEdge, this.Destination, this.Source);
                     EdmondsKarp alg = new EdmondsKarp(p);
                     alg.FindMaxFlow(this.Source, this.Destination);
                     int maxFlow = alg.GetMaxFlow(this.Destination);
@@ -225,7 +225,7 @@ namespace EdmondsKarp
                         {
                             if ((myStream = sfd.OpenFile()) != null)
                             {
-                                Graph p = new Graph(this.listVertex, this.listEdge);
+                                Graph p = new Graph(this.listVertex, this.listEdge, this.Destination, this.Source);
                                 var binaryFormatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
                                 binaryFormatter.Serialize(myStream, p);
                                 MessageBox.Show("Salvo com sucesso!");
@@ -264,6 +264,8 @@ namespace EdmondsKarp
 
                                 this.listEdge = p.ListEdges;
                                 this.listVertex = p.ListVertex;
+                                this.Source = p.Source;
+                                this.Destination = p.Destination;
 
                                 MessageBox.Show("Carregado com sucesso!");
                             }
@@ -282,7 +284,7 @@ namespace EdmondsKarp
                 
                 Screen.Blit(SurfaceTextCoordinate, new Point(890, 0));
                 Screen.Blit(SurfaceTextMenu, new Point(0, 0));
-                Screen.Blit(SurfaceTextStatus, new Point(0, 450));
+                //Screen.Blit(SurfaceTextStatus, new Point(0, 450));
                 
 
                 Screen.Update();
